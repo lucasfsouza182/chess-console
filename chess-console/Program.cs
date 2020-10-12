@@ -16,7 +16,9 @@ namespace chess_console
                 board.SetPieceInPosition(new Tower(board, Color.Black), new Position(1, 3));
                 board.SetPieceInPosition(new King(board, Color.Black), new Position(0, 2));
 
-                Screen.printBoard(board);
+                board.SetPieceInPosition(new Tower(board, Color.White), new Position(3, 5));
+
+                Screen.PrintBoard(board);
             }
             catch(BoardException e)
             {
