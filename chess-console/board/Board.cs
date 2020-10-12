@@ -22,10 +22,36 @@ namespace board
             return Pieces[line, column];
         }
 
-        public void setPieceInPosition(Piece piece, Position position)
+        public Piece piece(Position position)
         {
+            return Pieces[position.Line, position.Column];
+        }
+
+        public void SetPieceInPosition(Piece piece, Position position)
+        {
+            if(ExistPieceInPosition(position))
+                throw new BoardException("There is already a piece in that position!");
+
             Pieces[position.Line, position.Column] = piece;
             piece.Position = position;
+        }
+
+        public bool ExistPieceInPosition(Position position)
+        {
+            ValidatePosition(position);
+            return piece(position) != null;
+        }
+
+        public bool ValidPosition(Position position)
+        {
+            return !(position.Line < 0 || position.Line >= Lines ||
+                   position.Column < 0 || position.Column >= Columns);
+        }
+
+        public void ValidatePosition(Position position)
+        {
+            if (!ValidPosition(position))
+                throw new BoardException("Invalid position!");
         }
     }
 }
