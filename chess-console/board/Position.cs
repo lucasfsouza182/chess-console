@@ -19,5 +19,11 @@ namespace board
         {
             return Line + ", " + Column;
         }
+
+        public void SetValues(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
     }
 }

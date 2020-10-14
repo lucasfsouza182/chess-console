@@ -5,7 +5,7 @@ using System.Text;
 
 namespace board
 {
-    class Piece
+    abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -19,5 +19,12 @@ namespace board
             MovementQuantity = 0;
             Board = board;
         }
+
+        public void IncrementMovementQuantity()
+        {
+            MovementQuantity++;
+        }
+
+        public abstract bool[,] AvailableMoviments();
     }
 }

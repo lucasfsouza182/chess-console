@@ -10,15 +10,28 @@ namespace chess_console
         {
             try
             {
-                Board board = new Board(8, 8);
+                ChessMatch match = new ChessMatch();
 
-                board.SetPieceInPosition(new Tower(board, Color.Black), new Position(0, 0));
-                board.SetPieceInPosition(new Tower(board, Color.Black), new Position(1, 3));
-                board.SetPieceInPosition(new King(board, Color.Black), new Position(0, 2));
+                while (!match.finishedMatch)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(match.Board);
 
-                board.SetPieceInPosition(new Tower(board, Color.White), new Position(3, 5));
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = Screen.ReadChessPosition().ToBoardPosition();
 
-                Screen.PrintBoard(board);
+                    bool[,] availablePositions = match.Board.piece(origin).AvailableMoviments();
+
+                    Console.Clear();
+                    Screen.PrintBoard(match.Board, availablePositions);
+
+                    Console.WriteLine();
+                    Console.Write("Destination: ");
+                    Position destination = Screen.ReadChessPosition().ToBoardPosition();
+
+                    match.ExecuteMoviment(origin, destination);
+                }
             }
             catch(BoardException e)
             {
