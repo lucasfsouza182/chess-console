@@ -25,6 +25,27 @@ namespace board
             MovementQuantity++;
         }
 
+        public bool CanMoveTo(Position position)
+        {
+            return AvailableMoviments()[position.Line, position.Column];
+        }
+
+        public bool ExistsPossibleMovements()
+        {
+            bool[,] mat = AvailableMoviments();
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public abstract bool[,] AvailableMoviments();
     }
 }

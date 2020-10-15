@@ -8,16 +8,16 @@ namespace chess
     class ChessMatch
     {
         public Board Board { get; private set; }
-        private int turn;
-        private Color currentPlayer;
-        public bool finishedMatch { get; private set; }
+        public int Turn { get; private set; }
+        public Color CurrentPlayer { get; private set; }
+        public bool FinishedMatch { get; private set; }
 
         public ChessMatch() 
         {
             Board = new Board(8, 8);
-            turn = 1;
-            currentPlayer = Color.White;
-            finishedMatch = false;
+            Turn = 1;
+            CurrentPlayer = Color.White;
+            FinishedMatch = false;
             PutPieces();
         }
 
@@ -28,6 +28,45 @@ namespace chess
             Piece capturedPiece = Board.removePieceFromPosition(destination);
             Board.SetPieceInPosition(piece, destination);
 
+        }
+
+        public void PerformeMove(Position origin, Position destination)
+        {
+            ExecuteMoviment(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+
+        public void ValidateOriginPosition(Position position)
+        {
+            if(Board.piece(position) == null)
+            {
+                throw new BoardException("There is no piece in the chosen origin position!");
+            }
+            if(CurrentPlayer != Board.piece(position).Color)
+            {
+                throw new BoardException("The chosen origin piece is not yours!");
+            }
+            if (!Board.piece(position).ExistsPossibleMovements())
+            {
+                throw new BoardException("There are not possible movements for the chosen piece!");
+            }
+        }
+
+        public void ValidateTargetPosition(Position origin, Position destination)
+        {
+            if (!Board.piece(origin).CanMoveTo(destination))
+            {
+                throw new BoardException("The target position is not valid!");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+                CurrentPlayer = Color.Black;
+            else
+                CurrentPlayer = Color.White;
         }
 
         private void PutPieces()
