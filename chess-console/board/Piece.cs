@@ -30,7 +30,7 @@ namespace board
             MovementQuantity--;
         }
 
-        public bool CanMoveTo(Position position)
+        public bool PossibleMovements(Position position)
         {
             return AvailableMoviments()[position.Line, position.Column];
         }
