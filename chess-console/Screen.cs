@@ -30,8 +30,8 @@ namespace chess_console
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.Turn);
             Console.WriteLine("Awaiting move: " + match.CurrentPlayer);
-            if(match.Check)
-                Console.WriteLine("CHECK!");
+            if(match.CheckMate)
+                Console.WriteLine("CheckMate!");
                 
         }
 
