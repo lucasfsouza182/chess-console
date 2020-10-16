@@ -25,6 +25,11 @@ namespace board
             MovementQuantity++;
         }
 
+        public void DecrementMovementQuantity()
+        {
+            MovementQuantity--;
+        }
+
         public bool CanMoveTo(Position position)
         {
             return AvailableMoviments()[position.Line, position.Column];
