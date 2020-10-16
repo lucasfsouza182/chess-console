@@ -22,6 +22,40 @@ namespace chess_console
             Console.WriteLine("  a b c d e f g h");
         }
 
+        public static void PrintMatch(ChessMatch match)
+        {
+            PrintBoard(match.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turn: " + match.Turn);
+            Console.WriteLine("Awaiting move: " + match.CurrentPlayer);
+        }
+
+        private static void PrintCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured pieces");
+            Console.Write("White: ");
+            PrintHashSet(match.CapturedPiecesByColor(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintHashSet(match.CapturedPiecesByColor(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        private static void PrintHashSet(HashSet<Piece> pieces)
+        {
+            Console.Write("[");
+            foreach(Piece x in pieces)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+        }
+
         public static void PrintBoard(Board board, bool[,] availablePositions)
         {
             ConsoleColor originalBackground = Console.BackgroundColor;
