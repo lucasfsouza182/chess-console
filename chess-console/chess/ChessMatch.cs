@@ -146,6 +146,22 @@ namespace chess
                 throw new BoardException("You cannot put yourself in check");
             }
 
+            Piece p = Board.piece(destination);
+
+            // #promocao
+            if (p is Pawn)
+            {
+                if ((p.Color == Color.White && destination.Line == 0) || (p.Color == Color.Black && destination.Line == 7))
+                {
+                    p = Board.removePieceFromPosition(destination);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.SetPieceInPosition(queen, destination);
+                    pieces.Add(queen);
+                }
+            }
+
+
             CheckMate = IsInCheck(Opponent(CurrentPlayer));
 
             if (TestCheckMate(Opponent(CurrentPlayer)))
@@ -157,8 +173,6 @@ namespace chess
                 Turn++;
                 ChangePlayer();
             }
-
-            Piece p = Board.piece(destination);
 
             // #en passant
             if (p is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2))
